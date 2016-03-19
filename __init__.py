@@ -20,3 +20,6 @@ print("irreducible:\n", irreducible_p)
 
 residues_p = r.get_residues(irreducible_p, Poly(x,x,domain="FF(%i)" % len(coeff)))
 print("residues:\n", residues_p)
+
+frequencies_p = r.get_sequence_frequencies(residues_p,2)
+print("frequencies:\n", frequencies_p)

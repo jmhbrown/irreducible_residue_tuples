@@ -16,8 +16,9 @@ def all_polynomials(coeff, max_degree):
 # polynomials, based on the coefficients.
 def init_polynomials(coeff):
     polynomials = []
+    domain = "FF(%i)" % len(coeff)
     for c in coeff:
-        f = Poly(c, x, modulus=len(coeff))
+        f = Poly(c, x, domain=domain)
         polynomials.append(f)
     return polynomials
 
@@ -32,7 +33,7 @@ def init_polynomials(coeff):
 def add_next_degree(next_degree, coeff, poly_list):
     new_poly_list = []
     for c in coeff:
-        new_term = Poly(0, x, modulus=len(coeff)) if c == 0 else Poly(c*x**(next_degree), x, modulus=len(coeff))
+        new_term = Poly(0, x, domain="FF(%i)" % len(coeff)) if c == 0 else Poly(c*x**(next_degree), x, domain="FF(%i)" % len(coeff))
         for poly in poly_list:
             new_poly_list.append(poly + new_term)
 

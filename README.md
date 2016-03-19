@@ -12,6 +12,4 @@ python __init.py
 # TODO
 
 * Stop hard coding degree and coefficients
-* Filter out irreducibles
-* Calculate residues
 * Calculate tuple frequencies

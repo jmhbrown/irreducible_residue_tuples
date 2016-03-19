@@ -1,4 +1,4 @@
-# irreducible_residue_tuples
+# Irreducible Residue Tuples
 Calculates the frequency of residue tuples in irreducible polynomials over various finite fields
 
 # Installing and Running
@@ -11,5 +11,6 @@ python __init.py
 
 # TODO
 
-* Stop hard coding degree and coefficients
-* Calculate tuple frequencies
+* Read parameters from an input file
+* Pretty (read: readable) output, output files
+* Double check sequence counting logic - it seems to get buggy at higher degrees.

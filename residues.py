@@ -14,6 +14,10 @@ def get_residues(polynomials, modulus):
 
   return residues
 
+def get_residue_frequencies(residues):
+  counts = Counter(i for i in residues)
+  return counts
+
 def get_sequence_frequencies(residues, sequence_length):
     """
     Calculates the frequencies at which various sequences of

@@ -12,14 +12,20 @@ from sympy.abc import x
 # XXX - the elements given here as coefficients are just
 #       integers, which might behave oddly.
 coeff = [0,1,2]
-all_p = g.all_polynomials(coeff, 3)
-# print("all:\n", all_p, "\n---")
+max_degree = 9
+sequence_length = 2
+modulus_poly = Poly(x**2+x+1, x, domain="FF(%i)" % len(coeff))
+
+all_p = g.all_polynomials(coeff, max_degree)
 
 irreducible_p = i.get_irreducible(all_p)
-print("irreducible:\n", irreducible_p)
+print("# of irreducible polynomials:\t", len(irreducible_p), "\n---")
 
-residues_p = r.get_residues(irreducible_p, Poly(x,x,domain="FF(%i)" % len(coeff)))
-print("residues:\n", residues_p)
+residues_p = r.get_residues(irreducible_p, modulus_poly)
+print("residues:\n", residues_p, "\n---")
 
-frequencies_p = r.get_sequence_frequencies(residues_p,2)
-print("frequencies:\n", frequencies_p)
+residue_counts = r.get_residue_frequencies(residues_p)
+print("residue counts:\n", residue_counts, "\n---")
+
+sequence_counts = r.get_sequence_frequencies(residues_p, sequence_length)
+print("frequencies:\n", sequence_counts, "\n---")

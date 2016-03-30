@@ -1,0 +1,14 @@
+[
+  {
+    "tuple_length": 2,
+    "modulus_poly": [1,1,1],
+    "coeff": [0,1],
+    "num_terms": 6
+  },
+  {
+    "tuple_length": 2,
+    "modulus_poly": "x**2+x+1",
+    "coeff": [0,1],
+    "num_terms": 6
+  }
+]

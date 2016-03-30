@@ -1,10 +1,10 @@
 import generation as g
 import residues as r
 
-import logging
 from sympy.polys import Poly
 from sympy.abc import x
 from optparse import OptionParser
+import logging
 import json
 
 
@@ -23,21 +23,22 @@ def run(parameters, logger):
     Run simulations with provided parameters
     """
     logger.debug("--- START RUN ---")
-    logger.info("parameters: %s" % parameters)
-    modulus_poly = Poly(parameters["modulus_poly"], x, domain="FF(%i)" % len(parameters["coeff"]))
+    logger.info("PARAMETERS: %s" % parameters)
+
     irreducible_p = g.get_irreducible_polynomials(parameters["coeff"], parameters["num_terms"])
-    logger.info("irreducible_count: %i" % len(irreducible_p))
+    logger.debug("IRREDUCIBLE_COUNT: %i" % len(irreducible_p))
 
+    modulus_poly = Poly(parameters["modulus_poly"], x, domain="FF(%i)" % len(parameters["coeff"]))
     avg_tuple_freq = r.average_tuple_frequency(modulus_poly, len(parameters["coeff"]), len(irreducible_p), parameters["tuple_length"])
-    logger.info("average_tuple_frequency: %s" % avg_tuple_freq)
-    residues_p = r.get_residues(irreducible_p, modulus_poly)
-    residue_counts = r.get_residue_frequencies(residues_p)
+    logger.info("AVERAGE_TUPLE_FREQUENCY: %s" % avg_tuple_freq)
 
-    tuple_counts = r.get_tuple_frequencies(residues_p, parameters["tuple_length"])
-    deviation_from_average = r.get_deviation_from_tuple_frequency(tuple_counts, avg_tuple_freq, parameters["num_terms"], len(parameters["coeff"]))
-    logger.info("tuple; total_count; deviation")
+    residues_p = r.get_residues(irreducible_p, modulus_poly)
+    residue_tuple_counts = r.get_tuple_frequencies(residues_p, parameters["tuple_length"])
+    deviation_from_average = r.get_deviation_from_tuple_frequency(residue_tuple_counts, avg_tuple_freq, parameters["num_terms"], len(parameters["coeff"]))
+
+    logger.info("TUPLE; TOTAL_COUNT; DEVIATION")
     for residue_tuple in deviation_from_average:
-        logger.info("%s; %s; %s" % (get_pretty(residue_tuple), tuple_counts[residue_tuple],deviation_from_average[residue_tuple]))
+        logger.info("%s; %s; %s" % (get_pretty(residue_tuple), residue_tuple_counts[residue_tuple],deviation_from_average[residue_tuple]))
 
 def parse_options_and_run():
   parser = OptionParser()
@@ -63,11 +64,3 @@ def parse_options_and_run():
       run(parameters, logger)
 
 parse_options_and_run()
-
-
-
-# XXX - only works with fields with prime order.
-#       So, coeff must be a list with prime length
-#
-# XXX - the elements given here as coefficients are just
-#       integers, which might behave oddly.

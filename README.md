@@ -32,3 +32,6 @@ Here's an example:
   }
 ]
 ```
+
+# Known Issues
+* only works with fields with prime order. So, coeff must be a list with prime length
